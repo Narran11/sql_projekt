@@ -17,10 +17,11 @@ WITH price_pay_difference AS (
 	GROUP BY "year" , gdp 
 )
 , final_numbers AS (
-SELECT ppd.YEAR AS year, 
-COALESCE(gdpd.gdp_difference_prct, '0') AS gdp_difference_final,
-COALESCE(ppd.pay_difference_prct , '0') AS pay_difference_final,
-COALESCE(ppd.price_difference_prct, '0') AS price_difference_final
+SELECT 
+	ppd.YEAR AS year, 
+	COALESCE(gdpd.gdp_difference_prct, '0') AS gdp_difference_final,
+	COALESCE(ppd.pay_difference_prct , '0') AS pay_difference_final,
+	COALESCE(ppd.price_difference_prct, '0') AS price_difference_final
 FROM price_pay_difference AS ppd
 JOIN gdp_difference AS gdpd
 ON ppd."year" = gdpd."year" 
