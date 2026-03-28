@@ -10,15 +10,15 @@ WITH prct_difference AS (
 )
 , price_pay_difference AS (
 SELECT
-YEAR, 
-price_difference_prct,
-pay_difference_prct,
-CAST(price_difference_prct AS int) - CAST(pay_difference_prct AS int) AS price_pay_difference_prct
+	YEAR, 
+	price_difference_prct,
+	pay_difference_prct,
+	CAST(price_difference_prct AS int) - CAST(pay_difference_prct AS int) AS price_pay_difference_prct
 FROM prct_difference
 )
 SELECT 
-YEAR,
-price_pay_difference_prct,
+	YEAR,
+	price_pay_difference_prct,
 CASE 
 	WHEN price_pay_difference_prct > 10 THEN 'yes'
 	ELSE 'no'
