@@ -8,7 +8,10 @@ WITH product_prices AS (
 	ORDER BY category_year ASC
 )
 , payroll_info AS (
-	SELECT cp.payroll_year, AVG(cp.value) AS average_pay, cp.industry_branch_code AS code, cpib."name" 
+	SELECT 
+		cp.payroll_year, 
+		AVG(cp.value) AS average_pay, 
+		cp.industry_branch_code AS code, cpib."name" 
 	FROM czechia_payroll AS cp 
 	JOIN czechia_payroll_industry_branch AS cpib 
 		ON cp.industry_branch_code = cpib.code 
