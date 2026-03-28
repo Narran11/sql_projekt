@@ -19,10 +19,10 @@ FROM prct_difference
 SELECT 
 	YEAR,
 	price_pay_difference_prct,
-CASE 
-	WHEN price_pay_difference_prct > 10 THEN 'yes'
-	ELSE 'no'
-END AS trend
+	CASE 
+		WHEN price_pay_difference_prct > 10 THEN 'yes'
+		ELSE 'no'
+	END AS trend
 FROM price_pay_difference
 
 	
