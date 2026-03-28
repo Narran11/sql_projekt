@@ -1,5 +1,5 @@
 WITH first_year AS (
-	SELECT 
+	SELECT  
 		YEAR AS first_year, 
 		tnipspf.product_code , 
 		tnipspf.product_name ,
