@@ -22,13 +22,16 @@ WITH product_prices AS (
 	ORDER BY cp.payroll_year ASC
 )
 , gdp_info AS (
-	SELECT e."year" , e.gdp 
+	SELECT 
+		e."year" , 
+		e.gdp 
 	FROM economies AS e 
 	WHERE e.country = 'Czech Republic'
 	ORDER BY e."year" ASC
 )
 , aggregated_info AS (
-SELECT pp.category_year AS year, 
+SELECT 
+		pp.category_year AS year, 
 		pp.code AS product_code, 
 		cpc."name" AS product_name, 
 		pp.value_average AS avg_product_price, 
