@@ -1,5 +1,6 @@
 WITH first_year AS (
-	SELECT YEAR AS first_year, 
+	SELECT 
+		YEAR AS first_year, 
 		tnipspf.product_code , 
 		tnipspf.product_name ,
 		tnipspf.avg_product_price , 
@@ -12,7 +13,8 @@ WITH first_year AS (
 	GROUP BY YEAR, product_code, product_name, avg_product_price, price_unit, price_value  
 )
 , last_year AS (
-	SELECT YEAR AS last_year, 
+	SELECT 
+		YEAR AS last_year, 
 		tnipspf.product_code , 
 		tnipspf.product_name ,
 		tnipspf.avg_product_price , 
