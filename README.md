@@ -1,4 +1,22 @@
-# sql_projekt
-Popis projektu 
-Popis tvorby primarni/sekundarni tabulky
-Odpovedi na vyzkumni otazky
+# Projekt SQL
+## Popis projektu
+#### Cílem tohoto projektu je analyzovat data o dostupnosti základních potravin pro veřejnost se snahou odhalit souvislosti a trendy mezi třemi hlavními parametry – mzdami v různých odvětvích, cenami produktů v různých kategoriích a HDP. Toho je dosaženo hledáním odpovědí na konkrétní otázky, které by poskytly přehled o vývoji potenciálních trendů v průběhu let. Konečným cílem je prezentace projektu nezávislou společností na konferenci. 
+
+## Tvorba primární a sekundární tabulek 
+
+1. U primární tabulky bylo prvním krokem porozumět datům v tabulkách *czechia_price*, *czechia_payroll* a *economies* a zjistit, které hodnoty jsou pro analýzu potřebné. Poté jsem se nejprve pokusila spojit data z tabulek *czechia_price* a *czechia_payroll*. Nejspolehlivějším dostupným společným identifikátorem byl rok, a ten tedy posloužil jako základ pro spojení. V tabulce *czechia_price* je datum zadáno jako long date, takže před spojením tabulek bylo nutné z něj nejprve extrahovat pouze rok. V tabulce *czechia_payroll* byly hodnoty rozděleny na čtvrtletí v rámci jednoho roku, proto byla použita průměrná hodnota za rok. V tabulce *economies* nebylo spojení na základě roku obtížné, jakmile byly odfiltrovány pouze výsledky pro Českou republiku. Díky spojení pouze na základě let byly vyfiltrovány roky, pro které máme k dispozici data ve všech třech tabulkách (a které se tedy kvalifikují jako srovnatelné období) – 2006–2018.
+2. U sekundární tabulky byla tabulka *economies* spojena s tabulkou *countries* na základě podmínky, že kontinent v tabulce countries je Europe. Pro homogenitu dat byl vybrán stejný časový rámec (2006–2018). 
+
+## Výzkumné otázky
+1. Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
+- Zde jsem viděla dva různé přístupy k této otázce. První možností by bylo porovnat obecný trend (tj. porovnat mzdy v jednotlivých odvětvích v prvním a posledním srovnatelném období), přičemž trend by byl rostoucí ve všech odvětvích. Rozhodla jsem se však zkusit vytvořit podrobnější přehled, abych zjistila, zda v některém z jednotlivých let došlo v určitých odvětvích k poklesu mezd ve srovnání s předchozím rokem. Nejvíce postiženými odvětvími se zdají být **Těžba a dobývání**, kde došlo ke snížení mezd ve třech letech (2009, 2013, 2014), a **Výroba a rozvod elektřiny, plynu, tepla a klimatizace vzduchu** (2011, 2013, 2015). Z hlediska výše poklesu bylo v roce 2013 nejvíce zasaženo odvětví **Peněžnictví a pojišťovnictví**.
+2. Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd? 
+- První srovnatelné období: 2006. Mléko: **1,511 litrů**, chléb: **1,322 kg**.
+- Poslední srovnatelné období: 2018. Mléko: **1,654 litrů**, chléb: **1,378 kg**.
+3. Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)? 
+- **Banány žluté** s meziročním nárůstem pouhých 6,8 % (v následující kategorii ceny rostou téměř o 10%). Zde se zaměřuji pouze na skutečný nárůst cen a nezohledňuji kategorie, v nichž ceny v průběhu let klesají. 
+4. Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
+- V tomto případě jsem se zaměřila na zjištění průměrné výše mezd a cen ve všech odvětvích a kategoriích za jednotlivé roky a následně jsem porovnala meziroční nárůst mezd a cen. Na základě těchto výsledků je odpověď záporná. Rokem, kdy byl nárůst cen nejvyšší ve srovnání s nárůstem mezd (ale jenom o 7%), byl rok 2013.
+5. Má výška HDP vliv na změny ve mzdách a cenách potravin? Neboli, pokud HDP vzroste výrazněji v jednom roce, projeví se to na cenách potravin či mzdách ve stejném nebo následujícím roce výraznějším růstem?
+- V této otázce jsem trochu bojovala s definováním parametrů matice a nakonec s tím, jak vyřešit, že hodnoty NULL pro roky 2006 a 2007 ovlivňovaly celý trend (a zobrazovaly jej jako klesající) – nakonec se to podařilo vyřešit pomocí funkce coalesce. 
+- Pokud jde o korelace, na základě dat lze předpokládat, že nárůst HDP by vedl k nárůstu (nebo stabilizaci) mezd a to nejvýrazněji v následujícím roce. Naopak pokles HDP vede k poklesu mezd v následujícím roce. Úrovně nárůstu a poklesu se mohou lišit (a mohou být ovlivněny vývojem v předchozích letech), ale lze zde pozorovat obecný proporcionálně korelační trend. U cen naopak není korelace tak jednoznačná. Zdá se tedy, že v letech 2007–2011 existuje korelace mezi růstem HDP a cenami produktů, kdy změna cen proporcionálně odráží změnu HDP ve stejném roce, ale v letech 2012–2016 již tento trend nelze pozorovat. Korelace se vrací v letech 2017–2018.
